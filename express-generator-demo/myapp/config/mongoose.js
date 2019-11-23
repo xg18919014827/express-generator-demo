@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('./url-config');
+const model = require('../model/index');
 
 mongoose.connect(config.mongoose); //连接到mongoose服务器
 var db = mongoose.connection;
@@ -8,24 +9,16 @@ db.on('error', function() {
 });
 db.once('open', function() {
     console.log('we are connected');
-    //创建schema
-    var kittySchema = mongoose.Schema({
-        name: String
-    });
-    //向Schema中添加方法
-    kittySchema.methods.speak = function() {
-            var greeting = this.name ?
-                "kitty name is " + this.name :
-                "I dont have a name";
-            console.log(greeting);
-        }
-        //创建model
-    var Kitten = mongoose.model('Kitten', kittySchema);
+
+    //引用Kitten model
+    var Kitten = model.Kitten;
+    Kitten.speakLoudly();
+
     //实例化文档
     var littleDark = new Kitten({
         name: '小黑'
     });
-    console.log(littleDark.name);
+    // console.log(littleDark.name);
     littleDark.speak();
     //保存数据到数据库
     littleDark.save(function(err, doc) {
