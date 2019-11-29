@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 var kittySchema = mongoose.Schema({
-    name: String
+    name: {
+        type: String
+    },
+    age: {
+        type: Number
+    }
 });
 //向Schema中添加实例方法
 kittySchema.methods.speak = function() {
