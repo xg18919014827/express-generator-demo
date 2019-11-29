@@ -6,12 +6,6 @@ var Kitten = model.Kitten;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    // Kitten.create({ name: 'ace' }, function(err, doc) {
-    //     if (err) {
-    //         console.log(err)
-    //     };
-    //     console.log(doc);
-    // });
     // Kitten.remove({}, function(err, doc) {
     //     if (err) {
     //         console.log(err)
@@ -24,21 +18,21 @@ router.get('/', function(req, res, next) {
     //     };
     //     console.log(docs)
     // });
-    var result = null;
-    Kitten.find({
-            $or: [{ name: 'Ace' }, { age: 28 }]
-        },
+    Kitten.find({},
         function(err, docs) {
             if (err) {
                 console.log(err)
             };
             console.log(docs);
-            result = docs[0].name;
+            var result = [];
+            docs.forEach(function(item, index) {
+                result.push({ name: item.name, age: item.age || '' });
+            })
             console.log(result);
+            res.send({
+                result: result
+            });
         });
-    res.json({
-        result: result
-    });
 });
 
 
