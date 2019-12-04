@@ -95,7 +95,6 @@ router.post("/uploadFile", function(req, res, err) {
     console.log(files);
     res.writeHead(200, { "content-type": "multipart/form-data" });
     res.write("上传成功");
-    // res.end();
     res.end(util.inspect({ fields: fields, files: files }));
   });
 });
